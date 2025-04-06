@@ -26,7 +26,11 @@ public class AdvertisingRegion(
             {
                 advertisingPlatformsByLocation[keyLocation] = [];
             }
-            advertisingPlatformsByLocation[keyLocation].Add(advertisingPlatform);
+
+            if (!advertisingPlatformsByLocation[keyLocation].Contains(advertisingPlatform))
+            {
+                advertisingPlatformsByLocation[keyLocation].Add(advertisingPlatform);
+            }
         }
 
         foreach (var advertisingPlatforms in advertisingPlatformsByLocation)
@@ -37,12 +41,14 @@ public class AdvertisingRegion(
 
     public List<string> GetAdvertisingPlatforms(string location)
     {
+        location = location.Trim();
+
         if (advertisingPlatformsByLocation.TryGetValue(location, out List<string>? advertisingPlatforms))
         {
             return advertisingPlatforms;
         }
 
-        throw new NotFoundException($"Advertising platforms were not found for this location: {location}");
+        throw new NotFoundException($"Рекламные площадки для этого региона не были найдены: {location}");
     }
 
     private void AddExistAdvertisingPlatform(string location)
@@ -51,9 +57,9 @@ public class AdvertisingRegion(
 
         var pathLocation = new StringBuilder();
 
-        for (int j = 0; j < locationElements.Count; j++)
+        for (int i = 0; i < locationElements.Count; i++)
         {
-            pathLocation.Append($"/{locationElements[j]}");
+            pathLocation.Append($"/{locationElements[i]}");
 
             var pathLocationStr = pathLocation.ToString();
 

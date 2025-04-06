@@ -8,6 +8,7 @@ public static class ArrayExtensions
         {
             throw new ArgumentException("Массив должен содержать как минимум два элемента.");
         }
+
         return array[1];
     }
 }

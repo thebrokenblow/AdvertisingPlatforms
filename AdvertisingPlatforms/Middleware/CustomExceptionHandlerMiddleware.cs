@@ -1,5 +1,7 @@
 ﻿using AdvertisingPlatforms.WebApi.Exceptions;
+using FluentValidation;
 using System.Net;
+using System.Net.Mime;
 using System.Text.Json;
 
 namespace AdvertisingPlatforms.WebApi.Middleware;
@@ -22,14 +24,19 @@ public class CustomExceptionHandlerMiddleware(RequestDelegate next)
     {
         var code = HttpStatusCode.InternalServerError;
         var result = string.Empty;
+
         switch (exception)
         {
+            case ValidationException validationException:
+                code = HttpStatusCode.BadRequest;
+                result = JsonSerializer.Serialize(validationException.Errors);
+                break;
             case NotFoundException:
                 code = HttpStatusCode.NotFound;
                 break;
         }
 
-        context.Response.ContentType = "application/json";
+        context.Response.ContentType = MediaTypeNames.Application.Json;
         context.Response.StatusCode = (int)code;
 
         if (result == string.Empty)
