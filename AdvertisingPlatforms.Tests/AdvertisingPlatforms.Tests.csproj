@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AdvertisingPlatforms.WebApi\AdvertisingPlatforms.WebApi.csproj" />
     <ProjectReference Include="..\AdvertisingPlatforms\AdvertisingPlatforms.WebApi.csproj" />
   </ItemGroup>
 
