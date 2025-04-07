@@ -16,10 +16,8 @@ public partial class Startup(IWebHostEnvironment env)
     {
         services.AddControllers();
 
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new() { Title = "AdvertisingPlatforms API", Version = "v1" });
-        });
+        services.AddSwaggerGen();
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
         services.AddSingleton<IAdvertisingRegion, AdvertisingRegion>();
 
@@ -28,8 +26,6 @@ public partial class Startup(IWebHostEnvironment env)
 
         services.AddSingleton<ValidatorMapperLocationElements>();
         services.AddSingleton<ValidatorMapperLocationAdvertisingPlatform>();
-
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
     }
 
     public void Configure(IApplicationBuilder app)
@@ -40,12 +36,7 @@ public partial class Startup(IWebHostEnvironment env)
         }
 
         app.UseSwagger();
-        app.UseSwaggerUI(c =>
-        {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdvertisingPlatforms API v1");
-            c.RoutePrefix = string.Empty; // Устанавливаем пустой префикс маршрута для Swagger
-        });
-
+        app.UseSwaggerUI();
 
         app.UseCustomExceptionHandler();
         app.UseRouting();
