@@ -2,6 +2,7 @@
 
 public interface IAdvertisingRegion
 {
-    void AddLocationAdvertisingPlatform(string locationAdvertisingPlatform);
+    void AddAdvertisingPlatform(string locationAdvertisingPlatform);
     List<string> GetAdvertisingPlatforms(string location);
+    void Clear();
 }

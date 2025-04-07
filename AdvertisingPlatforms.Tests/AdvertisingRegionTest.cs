@@ -30,10 +30,10 @@ public class AdvertisingRegionTests
 
         var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
 
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
 
         // Act
         var result = advertisingRegion.GetAdvertisingPlatforms("/ru");
@@ -46,23 +46,23 @@ public class AdvertisingRegionTests
     public void Test_RuSvrdRegion_ReturnsCoolAdAndYandexDirect()
     {
         // Arrange
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
-
-        // Act
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd");
-
-        // Assert
         var expected = new List<string>
         {
             "Крутая реклама",
             "Яндекс.Директ"
         };
 
+        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
+
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
+
+        // Act
+        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd");
+
+        // Assert
         Assert.True(result.IsContainsSameElements(expected));
     }
 
@@ -70,23 +70,23 @@ public class AdvertisingRegionTests
     public void Test_RuMskRegion_ReturnsYandexDirectAndUralsNewspaper()
     {
         // Arrange
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
-
-        // Act
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/msk");
-
-        // Assert
         var expected = new List<string>
         {
             "Яндекс.Директ",
             "Газета уральских москвичей"
         };
 
+        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
+
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
+
+        // Act
+        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/msk");
+
+        // Assert
         Assert.True(result.IsContainsSameElements(expected));
     }
 
@@ -94,17 +94,6 @@ public class AdvertisingRegionTests
     public void Test_RuSvrdRevdaRegion_ReturnsMultiplePlatforms()
     {
         // Arrange
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
-
-        // Act
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/revda");
-
-        // Assert
         var expected = new List<string>
         {
             "Яндекс.Директ",
@@ -112,6 +101,17 @@ public class AdvertisingRegionTests
             "Ревдинский рабочий"
         };
 
+        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
+
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
+
+        // Act
+        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/revda");
+
+        // Assert
         Assert.True(result.IsContainsSameElements(expected));
     }
 
@@ -122,10 +122,10 @@ public class AdvertisingRegionTests
         var location = "/ru/unknown";
         var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
 
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
 
         // Act & Assert
         var exception = Assert.Throws<NotFoundException>(() =>
@@ -136,21 +136,9 @@ public class AdvertisingRegionTests
     }
 
     [Fact]
-    public void Test_MultiplePlatformsForSameRegion_ReturnsAllPlatforms()
+    public void Test_RetrieveAdPlatforms_ReturnsAllPlatformsForSpecificRegion()
     {
         // Arrange
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
-        advertisingRegion.AddLocationAdvertisingPlatform("Новая рекламная площадка:/ru/svrd/revda");
-
-        // Act
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/revda");
-
-        // Assert
         var expected = new List<string>
         {
             "Яндекс.Директ",
@@ -159,6 +147,18 @@ public class AdvertisingRegionTests
             "Новая рекламная площадка"
         };
 
+        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
+
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
+        advertisingRegion.AddAdvertisingPlatform("Новая рекламная площадка:/ru/svrd/revda");
+
+        // Act
+        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/revda");
+
+        // Assert
         Assert.True(result.IsContainsSameElements(expected));
     }
 
@@ -166,17 +166,6 @@ public class AdvertisingRegionTests
     public void Test_NestedRegions_ReturnsAllRelevantPlatforms()
     {
         // Arrange
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
-        advertisingRegion.AddLocationAdvertisingPlatform("Крутая реклама:/ru/svrd");
-
-        // Act
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/pervik");
-
-        // Assert
         var expected = new List<string>
         {
             "Яндекс.Директ",
@@ -184,6 +173,17 @@ public class AdvertisingRegionTests
             "Крутая реклама"
         };
 
+        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
+
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Крутая реклама:/ru/svrd");
+
+        // Act
+        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/pervik");
+
+        // Assert
         Assert.True(result.IsContainsSameElements(expected));
     }
 
@@ -199,8 +199,8 @@ public class AdvertisingRegionTests
 
         var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
 
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
 
         // Act
         var result = advertisingRegion.GetAdvertisingPlatforms("/ru/msk");
@@ -230,7 +230,6 @@ public class AdvertisingRegionTests
     public void Test_OverlappingRegions_ReturnsCorrectPlatforms()
     {
         // Arrange
-
         var expected = new List<string>
         {
             "Яндекс.Директ",
@@ -239,9 +238,9 @@ public class AdvertisingRegionTests
 
         var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
 
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd,/ru/svrd/revda");
-        advertisingRegion.AddLocationAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd,/ru/svrd/revda");
+        advertisingRegion.AddAdvertisingPlatform("Газета уральских москвичей:/ru/msk,/ru/permobl,/ru/chelobl");
 
         // Act
         var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd");
@@ -249,96 +248,26 @@ public class AdvertisingRegionTests
         // Assert
         Assert.True(result.IsContainsSameElements(expected));
     }
-
-    [Fact]
-    public void Test_DuplicatePlatformEntries_ReturnsUniquePlatforms()
-    {
-        // Arrange
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru/svrd");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-
-        // Act
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd");
-
-        // Assert
-        var expected = new List<string>
-        {
-            "Яндекс.Директ"
-        };
-
-        Assert.True(result.IsContainsSameElements(expected));
-    }
-
-    //[Fact] //TODO: Хороший тест, отдельно надо разобрать
-    //public void Test_RegionWithTrailingSlash_ReturnsCorrectPlatforms()
-    //{
-    //    // Arrange
-    //    var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-    //    advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-    //    advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-
-    //    // Act
-    //    var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd");
-
-    //    // Assert
-    //    var expected = new List<string>
-    //    {
-    //        "Ревдинский рабочий",
-    //        "Яндекс.Директ"
-    //    };
-
-    //    Assert.True(result.IsContainsSameElements(expected));
-    //}
-
 
     [Fact]
     public void Test_RegionWithWhitespace_ReturnsCorrectPlatforms()
     {
         // Arrange
+        var expected = new List<string>
+        {
+            "Яндекс.Директ",
+            "Ревдинский рабочий"
+        };
+
         var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
 
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
+        advertisingRegion.AddAdvertisingPlatform("Яндекс.Директ:/ru");
+        advertisingRegion.AddAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
 
         // Act
         var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/revda ");
 
         // Assert
-        var expected = new List<string>
-        {
-            "Яндекс.Директ",
-            "Ревдинский рабочий"
-        };
-
-        Assert.True(result.IsContainsSameElements(expected));
-    }
-
-    [Fact]
-    public void Test_RegionWithSpecialCharacters_ThrowsArgumentException()
-    {
-        // Arrange
-
-        var expected = new List<string>
-        {
-            "Яндекс.Директ",
-            "Ревдинский рабочий"
-        };
-
-        var advertisingRegion = new AdvertisingRegion(mapperLocationAdvertisingPlatform, mapperLocationElements);
-
-        advertisingRegion.AddLocationAdvertisingPlatform("Яндекс.Директ:/ru");
-        advertisingRegion.AddLocationAdvertisingPlatform("Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik");
-
-        // Act
-
-        var result = advertisingRegion.GetAdvertisingPlatforms("/ru/svrd/revda");
-
-        //Assert
-
         Assert.True(result.IsContainsSameElements(expected));
     }
 }

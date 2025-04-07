@@ -4,10 +4,9 @@ using AdvertisingPlatforms.WebApi.Model;
 using AdvertisingPlatforms.WebApi.Model.Interfaces;
 using AdvertisingPlatforms.WebApi.Model.Mappers;
 using AdvertisingPlatforms.WebApi.Model.Mappers.Interfaces;
-using FluentValidation;
+using AdvertisingPlatforms.WebApi.Model.Validation;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Reflection;
 
 namespace AdvertisingPlatforms.WebApi;
 
@@ -16,15 +15,21 @@ public partial class Startup(IWebHostEnvironment env)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddSwaggerGen();
 
-        services.AddScoped<IAdvertisingRegion, AdvertisingRegion>();
-        services.AddScoped<IMapperLocationElements, MapperLocationElements>();
-        services.AddScoped<IMapperLocationAdvertisingPlatform, MapperLocationAdvertisingPlatform>();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new() { Title = "AdvertisingPlatforms API", Version = "v1" });
+        });
+
+        services.AddSingleton<IAdvertisingRegion, AdvertisingRegion>();
+
+        services.AddSingleton<IMapperLocationElements, MapperLocationElements>();
+        services.AddSingleton<IMapperLocationAdvertisingPlatform, MapperLocationAdvertisingPlatform>();
+
+        services.AddSingleton<ValidatorMapperLocationElements>();
+        services.AddSingleton<ValidatorMapperLocationAdvertisingPlatform>();
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-
-        services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
     }
 
     public void Configure(IApplicationBuilder app)
@@ -35,7 +40,12 @@ public partial class Startup(IWebHostEnvironment env)
         }
 
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdvertisingPlatforms API v1");
+            c.RoutePrefix = string.Empty; // Устанавливаем пустой префикс маршрута для Swagger
+        });
+
 
         app.UseCustomExceptionHandler();
         app.UseRouting();

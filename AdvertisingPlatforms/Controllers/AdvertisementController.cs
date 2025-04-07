@@ -1,3 +1,5 @@
+using AdvertisingPlatforms.WebApi.Model;
+using AdvertisingPlatforms.WebApi.Model.Dto;
 using AdvertisingPlatforms.WebApi.Model.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -10,64 +12,82 @@ namespace AdvertisingPlatforms.WebApi.Controllers;
 public class AdvertisementController(IAdvertisingRegion advertisingRegion) : ControllerBase
 {
     /// <summary>
-    /// Загрузка рекламных прощадок и регионов, где они работают
+    /// Загрузка рекламных площадок и их регионов.
     /// </summary>
     /// <remarks>
-    /// Sample request:
-    /// POST /api/products
+    /// Пример запроса:
+    ///
+    /// ```http
+    /// POST /api/advertisement
+    /// Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+    ///
+    /// ----WebKitFormBoundary7MA4YWxkTrZu0gW
+    /// Content-Disposition: form-data; name="file"; filename="advertisements.txt"
+    /// Content-Type: text/plain
+    ///
+    /// Яндекс.Директ:/ru
+    /// Ревдинский рабочий:/ru/svrd/revda,/ru/svrd/pervik
+    /// ----WebKitFormBoundary7MA4YWxkTrZu0gW--
+    /// ```
     /// </remarks>
-    /// <returns>Returns Ok(message)</returns>
-    /// <response code="200">Success</response>
+    /// <returns>Возвращает сообщение об успешной загрузке.</returns>
+    /// <response code="200">Успешная загрузка.</response>
     /// <response code="400">
-    /// 1. Какая-то строка в файле пустая;
-    /// 2. Какая-то строка в файле не содержать ровно две части, разделенные символом ':';
-    /// 3. Какая-то строка в файле пустая или содержит только пробелы.
+    /// Ошибки валидации:
+    /// 1. Пустая строка в файле.
+    /// 2. Строка не содержит ровно две части, разделенные ':'.
+    /// 3. Строка пустая или содержит только пробелы.
     /// </response>
 
-    [HttpPost]
+    [HttpPost("upload")]
     [ProducesResponseType(typeof(string), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(IEnumerable<ValidationException>), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(List<string>), StatusCodes.Status400BadRequest, MediaTypeNames.Application.Json)]
     public async Task<IActionResult> UploadAdvertisements()
     {
         var file = Request.Form.Files.FirstOrDefault();
 
         if (file == null || file.Length == 0)
         {
-            return BadRequest("Файл не выбран или ничего не содержит");
+            return BadRequest("Файл не выбран или пуст.");
         }
 
         using var reader = new StreamReader(file.OpenReadStream());
 
         string locationAdvertisingPlatform;
 
+        advertisingRegion.Clear();
         while ((locationAdvertisingPlatform = await reader.ReadLineAsync()) != null)
         {
-            advertisingRegion.AddLocationAdvertisingPlatform(locationAdvertisingPlatform);
+            advertisingRegion.AddAdvertisingPlatform(locationAdvertisingPlatform);
         }
 
         return Ok("Рекламные площадки были успешно загружены.");
     }
 
     /// <summary>
-    /// Получение списка рекламных площадок по их региону
+    /// Получение списка рекламных площадок по региону.
     /// </summary>
+    /// <param name="locationRequestDto">Объект, содержащий информацию о регионе в формате: '/ru/svrd/revda'.</param>
     /// <remarks>
-    /// <param name="location">строка представляющая из себя регион в формате: '/ru/svrd/revda'</param>
-    /// Sample request:
-    /// GET /api/products/'ru/svrd/revda'
+    /// Пример запроса:
+    /// POST /api/advertisement/search
+    /// Тело запроса:
+    /// {
+    ///     "location": "/ru/svrd/revda"
+    /// }
     /// </remarks>
-    /// <returns>Возвращается список строк рекламных площадок</returns>
-    /// <response code="200">Success</response>
-    /// <response code="404">Не найдены рекламные площадки, по переданному региону</response>
+    /// <returns>Список рекламных площадок.</returns>
+    /// <response code="200">Успешный запрос.</response>
+    /// <response code="404">Рекламные площадки не найдены для указанного региона.</response>
 
-    [HttpGet("{location}")]
+    [HttpPost("search")]
     [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK, MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound, MediaTypeNames.Application.Json)]
-    public ActionResult<List<string>> SearchAdvertisements(string location)
+    public ActionResult<List<string>> SearchAdvertisements([FromBody] LocationRequestDto locationRequestDto)
     {
-        
-        var advertisingPlatforms = advertisingRegion.GetAdvertisingPlatforms(location);
+        var advertisingPlatforms = advertisingRegion.GetAdvertisingPlatforms(locationRequestDto.Location);
 
         return Ok(advertisingPlatforms);
     }
+
 }

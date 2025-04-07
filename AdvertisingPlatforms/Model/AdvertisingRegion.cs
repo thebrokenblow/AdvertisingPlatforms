@@ -12,7 +12,7 @@ public class AdvertisingRegion(
 
     private readonly Dictionary<string, List<string>> advertisingPlatformsByLocation = [];
 
-    public void AddLocationAdvertisingPlatform(string locationAdvertisingPlatform)
+    public void AddAdvertisingPlatform(string locationAdvertisingPlatform)
     {
         var (advertisingPlatform, locations) = mapperLocationAdvertisingPlatform.Map(locationAdvertisingPlatform);
 
@@ -75,5 +75,10 @@ public class AdvertisingRegion(
                 existingAdvertisingPlatforms.AddRange(distinctAdvertisingPlatforms);
             }
         }
+    }
+
+    public void Clear()
+    {
+        advertisingPlatformsByLocation.Clear();
     }
 }
