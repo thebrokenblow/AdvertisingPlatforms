@@ -14,28 +14,37 @@ public class AdvertisingRegion(
 
     public void AddAdvertisingPlatform(string locationAdvertisingPlatform)
     {
-        var (advertisingPlatform, locations) = mapperLocationAdvertisingPlatform.Map(locationAdvertisingPlatform);
-
-        for (int i = 0; i < locations.Length; i++)
+        try
         {
-            var keyLocation = locations[i];
+            var (advertisingPlatform, locations) = mapperLocationAdvertisingPlatform.Map(locationAdvertisingPlatform);
 
-            AddExistAdvertisingPlatform(keyLocation);
-
-            if (!advertisingPlatformsByLocation.ContainsKey(keyLocation))
+            for (int i = 0; i < locations.Length; i++)
             {
-                advertisingPlatformsByLocation[keyLocation] = [];
+                var keyLocation = locations[i];
+
+                AddExistAdvertisingPlatform(keyLocation);
+
+                if (!advertisingPlatformsByLocation.ContainsKey(keyLocation))
+                {
+                    advertisingPlatformsByLocation[keyLocation] = [];
+                }
+
+                if (!advertisingPlatformsByLocation[keyLocation].Contains(advertisingPlatform))
+                {
+                    advertisingPlatformsByLocation[keyLocation].Add(advertisingPlatform);
+                }
             }
 
-            if (!advertisingPlatformsByLocation[keyLocation].Contains(advertisingPlatform))
+            foreach (var advertisingPlatforms in advertisingPlatformsByLocation)
             {
-                advertisingPlatformsByLocation[keyLocation].Add(advertisingPlatform);
+                AddExistAdvertisingPlatform(advertisingPlatforms.Key);
             }
         }
-
-        foreach (var advertisingPlatforms in advertisingPlatformsByLocation)
+        catch (NotFoundException)
         {
-            AddExistAdvertisingPlatform(advertisingPlatforms.Key);
+            Clear();
+
+            throw;
         }
     }
 

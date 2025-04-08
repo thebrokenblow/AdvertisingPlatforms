@@ -1,9 +1,9 @@
-﻿using AdvertisingPlatforms.Tests.Exceptions;
+﻿using AdvertisingPlatforms.UnitTests.Exceptions;
 using AdvertisingPlatforms.WebApi.Model.Mappers;
 using AdvertisingPlatforms.WebApi.Model.Validation;
 using FluentValidation;
 
-namespace AdvertisingPlatforms.Tests;
+namespace AdvertisingPlatforms.UnitTests;
 
 public class MapperLocationElementsTests
 {

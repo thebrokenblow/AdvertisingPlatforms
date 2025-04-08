@@ -16,4 +16,5 @@ public partial class Program
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
 }

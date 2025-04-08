@@ -1,10 +1,10 @@
-﻿using AdvertisingPlatforms.Tests.Exceptions;
+﻿using AdvertisingPlatforms.UnitTests.Exceptions;
 using AdvertisingPlatforms.WebApi.Exceptions;
 using AdvertisingPlatforms.WebApi.Model;
 using AdvertisingPlatforms.WebApi.Model.Mappers;
 using AdvertisingPlatforms.WebApi.Model.Validation;
 
-namespace AdvertisingPlatforms.Tests;
+namespace AdvertisingPlatforms.UnitTests;
 
 public class AdvertisingRegionTests
 {
