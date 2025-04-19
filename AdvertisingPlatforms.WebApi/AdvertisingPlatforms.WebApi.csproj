@@ -8,6 +8,10 @@
 	<NoWarn>$(NoWarn);1591</NoWarn>
     <FileEncoding>utf-8</FileEncoding>
   </PropertyGroup>
+	  
+  <PropertyGroup>
+    <CodePage>65001</CodePage>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
