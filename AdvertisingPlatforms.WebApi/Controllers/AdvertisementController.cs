@@ -53,7 +53,7 @@ public class AdvertisementController(IAdvertisingRegion advertisingRegion) : Con
 
         using var reader = new StreamReader(file.OpenReadStream());
 
-        string locationAdvertisingPlatform;
+        string? locationAdvertisingPlatform;
 
         advertisingRegion.Clear();
         while ((locationAdvertisingPlatform = await reader.ReadLineAsync()) != null)

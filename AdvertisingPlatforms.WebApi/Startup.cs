@@ -10,7 +10,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace AdvertisingPlatforms.WebApi;
 
-public partial class Startup(IWebHostEnvironment env)
+public class Startup(IWebHostEnvironment env)
 {
     public void ConfigureServices(IServiceCollection services)
     {

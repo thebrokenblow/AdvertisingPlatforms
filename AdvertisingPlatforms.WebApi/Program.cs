@@ -5,7 +5,7 @@ public partial class Program
     public static void Main(string[] args)
     {
         var app = CreateHostBuilder(args)
-           .Build();
+                                    .Build();
 
         app.Run();
     }
