@@ -5,7 +5,6 @@ using AdvertisingPlatforms.WebApi.Model.Mappers.Interfaces;
 
 namespace AdvertisingPlatforms.WebApi.Model;
 
-///Некоторый текст
 public class AdvertisingRegion(
     IMapperLocationAdvertisingPlatform mapperLocationAdvertisingPlatform,
     IMapperLocationElements mapperLocationElements) : IAdvertisingRegion
